@@ -1,11 +1,12 @@
 package com.example.ListTasks.service;
 
-import com.example.ListTasks.model.Tasks;
+import com.example.ListTasks.model.Task;
+import com.example.ListTasks.model.TaskStatus;
 import com.example.ListTasks.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,55 +16,24 @@ public class TaskService {
 
     private final TaskRepository repository;
 
-    /**
-     * Получить список всех задач
-     * @return возвращает список задач
-     */
-    public List<Tasks> getAllTasks() {
+    public Task add(Task task) {
+        return repository.save(task);
+    }
+
+    public List<Task> findAll(){
         return repository.findAll();
     }
 
-    /**
-     * получить задачу по id
-     * @param id идентификатор
-     * @return возвращаем найденную задачу
-     */
-    public Optional<Tasks> getTasksById(Long id) {
-        return repository.findById(id);
+    public List<Task> findTasksByStatus(TaskStatus taskStatus){
+        return repository.findTasksByStatus(taskStatus);
     }
 
-    /**
-     * создание задачи
-     * @param tasks новая задача
-     * @return сохраняем новую задачу
-     */
-    public Tasks createBook(Tasks tasks) {
-        return repository.save(tasks);
+    @Transactional
+    public Task updateById(Long id, Task task) {
+        repository.updateTaskById(task.getTitleTask(), task.getTaskStatus(), id);
+        return repository.findById(id).get();
     }
 
-    /**
-     * обновление задачи
-     * @param id идентификатор
-     * @param tasksDetails обновленная задача
-     * @return сохраняем обновленную задачу
-     */
-    public Tasks updateTask(Long id, Tasks tasksDetails) {
-        Optional<Tasks> optionalBook = repository.findById(id);
-        if (optionalBook.isPresent()) {
-            Tasks tasks = optionalBook.get();
-            tasks.setTitleTask(tasksDetails.getTitleTask());
-            tasks.setTaskStatus(tasksDetails.getTaskStatus());
-            tasks.setDateTimeCreateTask(tasksDetails.getDateTimeCreateTask());
-            return repository.save(tasks);
-        } else {
-            throw new IllegalArgumentException("Task not found with id: " + id);
-        }
-    }
-
-    /**
-     * удаление задачи по id
-     * @param id идентификатор
-     */
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
