@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor                                         //автогенерация конструктора
@@ -30,7 +29,7 @@ public class TaskService {
 
     @Transactional
     public Task updateById(Long id, Task task) {
-        repository.updateTaskById(task.getTitleTask(), task.getTaskStatus(), id);
+        repository.updateTaskById(task.getTitleTask(), task.getStatus(), id);
         return repository.findById(id).get();
     }
 

@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)         //авто генерация ID-шника
+    @GeneratedValue(strategy = GenerationType.IDENTITY)      //авто генерация ID-шника
     private Long id;
-    @Column(nullable = false, length = 500)                                   // поле обязательно должно быть заполнено
+    @Column(nullable = false, length = 500)                  // поле обязательно должно быть заполнено
     private String titleTask;
     @Column(nullable = false)                                // аннотация позволяет настраивать способ сохранения и загрузки enum-значений из базы данных при использовании JPA
-    private TaskStatus taskStatus;
+    private TaskStatus status;
     @Column(name = "dateTimeCreateTask", nullable = false)
     private LocalDateTime dateTimeCreateTask;
 
@@ -27,9 +27,9 @@ public class Task {
     public Task(Task task) {
         if (task.getTitleTask() != null)
             this.titleTask = task.getTitleTask();
-        if (task.taskStatus == null)
-            this.taskStatus = TaskStatus.NOT_STARTED;
-        else this.taskStatus = task.getTaskStatus();
+        if (task.status == null)
+            this.status = TaskStatus.NOT_STARTED;
+        else this.status = task.getStatus();
         if (task.dateTimeCreateTask == null)
             this.dateTimeCreateTask = LocalDateTime.now();
         else this.dateTimeCreateTask = task.dateTimeCreateTask;

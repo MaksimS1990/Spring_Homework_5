@@ -11,7 +11,7 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findTasksByStatus(TaskStatus taskStatus);
 
-    @Modifying                                                                       // аннотация обновления
-    @Query("update Task u set u.titleTask = ?1, u.taskStatus = ?2 where u.id = ?3")  // аннотация используется для определения пользовательских запросов в Spring Data JPA
-    void updateTaskById(String titleTask, TaskStatus taskStatus, Long id);
+    @Modifying                                                                   // аннотация обновления
+    @Query("update Task u set u.titleTask = ?1, u.status = ?2 where u.id = ?3")  // аннотация используется для определения пользовательских запросов в Spring Data JPA
+    void updateTaskById(String titleTask, TaskStatus status, Long id);
 }
