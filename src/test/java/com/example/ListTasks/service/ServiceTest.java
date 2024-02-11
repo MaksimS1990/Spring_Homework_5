@@ -24,6 +24,7 @@ import java.util.List;
 import static com.example.ListTasks.model.TaskStatus.IN_PROGRESS;
 import static com.example.ListTasks.model.TaskStatus.NOT_STARTED;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 
 @SpringBootTest
@@ -66,6 +67,7 @@ public class ServiceTest {
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(2, result.size(), "Good");
+        verify(taskRepository).findAll();
     }
 
 //    @Test
