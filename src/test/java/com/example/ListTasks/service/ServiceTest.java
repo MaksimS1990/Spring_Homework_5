@@ -1,30 +1,33 @@
 package com.example.ListTasks.service;
 
-import com.example.ListTasks.controller.TaskController;
 import com.example.ListTasks.model.Task;
 import com.example.ListTasks.repository.TaskRepository;
 import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+;
 
 import static com.example.ListTasks.model.TaskStatus.IN_PROGRESS;
 import static com.example.ListTasks.model.TaskStatus.NOT_STARTED;
 import static org.mockito.BDDMockito.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
+
 
 @SpringBootTest
+//@ExtendWith(MockitoExtension.class)
 public class ServiceTest {
     @Mock                                                // разрываем соединение
     private TaskRepository taskRepository;
@@ -34,9 +37,10 @@ public class ServiceTest {
 
     List<Task> tasks = new ArrayList<>();
 
-    public Task task1;
-    public Task task2;
+    public Task task1 = new Task();
+    public Task task2 = new Task();
 
+    @BeforeEach
     public void Starting() {
 
         task1.setId(1L);
@@ -61,8 +65,20 @@ public class ServiceTest {
         List<Task> result = taskService.findAll();
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals(2, result.size(), "Good");
     }
+
+//    @Test
+//    public void findTasksByStatusTest() {
+//
+//        Mockito.when(taskRepository.findAll()).thenReturn(tasks);
+//
+//        List<Task> result = taskService.findTasksByStatus(IN_PROGRESS);
+//
+//        Assertions.assertNotNull(result);
+//        Assertions.assertEquals(1, result.size());
+//        Assertions.assertEquals(tasks.get(0), result.get(0));
+//    }
 }
 
 
