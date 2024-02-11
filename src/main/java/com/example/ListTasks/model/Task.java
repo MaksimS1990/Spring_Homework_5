@@ -28,11 +28,14 @@ public class Task {
         if (task.getTitleTask() != null)
             this.titleTask = task.getTitleTask();
         if (task.status == null)
-            this.status = TaskStatus.NOT_STARTED;
-        else this.status = task.getStatus();
+            this.status = getStatus();
         if (task.dateTimeCreateTask == null)
             this.dateTimeCreateTask = LocalDateTime.now();
         else this.dateTimeCreateTask = task.dateTimeCreateTask;
     }
 
+    public Task(String titleTask, String status) {
+        this.titleTask = titleTask;
+        this.status = TaskStatus.valueOf("IN_PROGRESS");
+    }
 }
