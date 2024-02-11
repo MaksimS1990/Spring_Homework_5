@@ -2,6 +2,7 @@ package com.example.ListTasks.service;
 
 import com.example.ListTasks.model.Task;
 import com.example.ListTasks.repository.TaskRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,7 +39,10 @@ public class IntegrationTest {
             tasks.add(task2);
             given(taskRepository.findAll()).willReturn(tasks);
 
-            List<Task> allTasks = taskService.findAll();
+            List<Task> result = taskService.findAll();
+
+            Assertions.assertNotNull(result);
+            Assertions.assertEquals(2, result.size());
         }
 
     }

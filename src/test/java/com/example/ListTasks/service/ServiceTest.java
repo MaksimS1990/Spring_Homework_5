@@ -3,6 +3,8 @@ package com.example.ListTasks.service;
 import com.example.ListTasks.controller.TaskController;
 import com.example.ListTasks.model.Task;
 import com.example.ListTasks.repository.TaskRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +24,6 @@ import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
-//@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class ServiceTest {
     @Mock                                                // разрываем соединение
@@ -47,6 +48,7 @@ public class ServiceTest {
         task2.setTitleTask("лечь спать в 21:00");
         task2.setStatus(NOT_STARTED);
         task2.setDateTimeCreateTask(LocalDateTime.now());
+
     }
 
     @Test
@@ -56,7 +58,10 @@ public class ServiceTest {
         tasks.add(task2);
         given(taskRepository.findAll()).willReturn(tasks);
 
-        List<Task> allTasks = taskService.findAll();
+        List<Task> result = taskService.findAll();
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(2, result.size());
     }
 }
 
